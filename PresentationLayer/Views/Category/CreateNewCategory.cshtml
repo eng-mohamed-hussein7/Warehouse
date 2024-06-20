@@ -1,0 +1,23 @@
+﻿@model CategoryDTO
+@{
+    ViewData["Title"] = "إضافة فئة جديدة";
+    // Set language direction and language
+    ViewData["Dir"] = "rtl"; // Right-to-Left for Arabic
+    ViewData["Lang"] = "ar"; // Language code for Arabic
+}
+
+<h1>إضافة فئة جديدة</h1>
+
+<form asp-action="CreateNewCategory" asp-controller="Category" method="post">
+    <div>
+        <label asp-for="Name" dir="rtl">أسم الفئة</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div>
+        <label asp-for="Description" dir="rtl">الوصف</label>
+        <textarea class="form-control" asp-for="Description"></textarea>
+    </div>
+    <div>
+        <input type="submit" value="إنشاء" class="btn btn-primary" />
+    </div>
+</form>
