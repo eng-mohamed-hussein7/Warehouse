@@ -22,24 +22,7 @@ namespace BusinessLogicLayer.Services.ProductServices
         {
             return await _productRepository.GetByIdAsync(id);
         }
-
-        //public async Task AddProductAsync(ProductDTO product,int categoryID)
-        //{
-        //    Product newProduct = new Product()
-        //    {
-        //        Code = product.Code,
-        //        Name = product.Name,
-        //        DateOfAddition = DateTime.Now,
-        //        Description = product.Description,
-        //        UnitType = product.UnitType,
-        //        Price = product.Price,
-        //        Quantity = product.Quantity,
-        //        Category_Id = categoryID,
-        //        IsDeleted = false,
-        //    };
-        //    await _productRepository.AddAsync(newProduct);
-        //}
-
+                
         public async Task UpdateProductAsync(Product product)
         {
             await _productRepository.UpdateAsync(product);
@@ -50,9 +33,21 @@ namespace BusinessLogicLayer.Services.ProductServices
             await _productRepository.DeleteAsync(id);
         }
 
-        public Task AddProductAsync(Product product, int categoryID)
+        public async Task AddProductAsync(ProductDTO product)
         {
-            throw new NotImplementedException();
+            Product newProduct = new Product()
+            {
+                Code = product.Code,
+                Name = product.Name,
+                DateOfAddition = DateTime.Now,
+                Description = product.Description,
+                UnitType = product.UnitType,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                Category_Id = product.CategoryId,
+                IsDeleted = false,
+            };
+            await _productRepository.AddAsync(newProduct);
         }
     }
-}
+    }

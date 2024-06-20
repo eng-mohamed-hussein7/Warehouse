@@ -29,9 +29,17 @@ namespace BusinessLogicLayer.Services.CategoryServices
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+           
+                var categories = await _categoryRepository.GetAllAsync();
+                return categories.Select(c => new Category
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description
+                }).ToList();
+            
         }
 
         public Task<CategoryDTO> GetCategoryByIdAsync(int id)

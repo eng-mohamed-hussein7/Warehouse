@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Data;
 using DomainLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories.CategoryService
 {
@@ -25,7 +26,7 @@ namespace DataAccessLayer.Repositories.CategoryService
 
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.tblCategories.ToListAsync();
         }
 
         public async Task<Category> GetByIdAsync(int id)

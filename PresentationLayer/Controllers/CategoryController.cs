@@ -1,7 +1,6 @@
 ﻿using BusinessLogicLayer.DTO;
 using BusinessLogicLayer.Services.CategoryServices;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace PresentationLayer.Controllers
 {

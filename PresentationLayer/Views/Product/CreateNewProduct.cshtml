@@ -1,0 +1,43 @@
+﻿@model ProductDTO
+
+@{
+    ViewData["Title"] = "إضافة صنف جديدة";
+    ViewData["Dir"] = "rtl"; // Right-to-Left for Arabic
+    ViewData["Lang"] = "ar"; // Language code for Arabic
+}
+
+<h1>إضافة صنف جديدة</h1>
+
+<form asp-action="CreateNewProduct" asp-controller="Product" method="post">
+    <div class="mb-3">
+        <label asp-for="Code" class="form-label" dir="rtl">كود الصنف</label>
+        <input class="form-control" asp-for="Code" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label" dir="rtl">أسم الصنف</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label" dir="rtl">الرصيد الافتتاحي</label>
+        <input class="form-control" asp-for="Quantity" type="number" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label" dir="rtl">السعر</label>
+        <input class="form-control" asp-for="Price" type="number" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="UnitType" class="form-label" dir="rtl">الوحدة</label>
+        <select class="form-select" asp-for="UnitType" asp-items="@(new SelectList(Model.UnitTypes, "Value", "Text"))"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label" dir="rtl">الفئة</label>
+        <select class="form-select" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Value", "Text"))" dir="rtl"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label" dir="rtl">الوصف</label>
+        <textarea class="form-control" asp-for="Description"></textarea>
+    </div>
+    <div>
+        <input type="submit" value="إنشاء" class="btn btn-primary" />
+    </div>
+</form>
