@@ -4,6 +4,8 @@ using DataAccessLayer.Repositories.ProductRepositories;
 using BusinessLogicLayer.Services.ProductServices;
 using DataAccessLayer.Repositories.CategoryService;
 using BusinessLogicLayer.Services.CategoryServices;
+using DataAccessLayer.Repositories.PurchaseInvoiceRepositories;
+using BusinessLogicLayer.Services.PurchaseInvoiceServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +19,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Configure Dependency Injection for Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IPurchaseInvoiceRepository, PurchaseInvoiceRepository>();
 
 // Configure Dependency Injection for Services
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPurchaseInvoiceService, PurchaseInvoiceService>();
+
+// Add AutoMapper configuration
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 

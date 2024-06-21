@@ -1,10 +1,6 @@
 ﻿using DomainLayer.Models;
+using DomainLayer.Models.PurchaseInvoice;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data
 {
@@ -16,5 +12,22 @@ namespace DataAccessLayer.Data
 
         public DbSet<Product> tblProducts { get; set; }
         public DbSet<Category> tblCategories { get; set; }
+        public DbSet<PurchaseInvoiceHead> tblPurchaseInvoiceHeads { get; set; }
+        public DbSet<PurchaseInvoiceDetail> tblPurchaseInvoiceDetails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PurchaseInvoiceHead>()
+                .HasMany(p => p.PurchaseInvoiceDetails)
+                .WithOne(d => d.PurchaseInvoiceHead)
+                .HasForeignKey(d => d.PurchaseInvoiceHead_ID);
+
+            modelBuilder.Entity<PurchaseInvoiceDetail>()
+                .HasOne(d => d.Product)
+                .WithMany()
+                .HasForeignKey(d => d.Product_ID);
+        }
     }
 }

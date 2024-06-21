@@ -1,0 +1,87 @@
+﻿@model BusinessLogicLayer.DTO.PurchaseInvoiceDTO
+@{
+    ViewData["Title"] = "Create Purchase Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>إضافة اذن استلام</h1>
+
+<form asp-action="CreateNewPurchaseInvoice" method="post">
+    <div class="form-group">
+        <label asp-for="SupplierName" class="control-label">اسم المورد</label>
+        <input asp-for="SupplierName" class="form-control" />
+        <span asp-validation-for="SupplierName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="InvoiceNumber" class="control-label">رقم الفاتورة</label>
+        <input asp-for="InvoiceNumber" class="form-control" />
+        <span asp-validation-for="InvoiceNumber" class="text-danger"></span>
+    </div>
+
+    <h4>الاصناف</h4>
+    <table class="table" id="invoiceDetailsTable">
+        <thead>
+            <tr>
+                <th>أسم الصنف</th>
+                <th>الكمية</th>
+                <th>   </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.PurchaseInvoiceDetails.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="PurchaseInvoiceDetails[i].Product_ID" class="form-control">
+                            <option value="">أختر الصنف</option>
+                            @foreach (var product in ViewBag.Products)
+                            {
+                                <option value="@product.Value">@product.Text</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input asp-for="PurchaseInvoiceDetails[i].ResivedQuantity" class="form-control" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="addRow()">إضافة صف جديد</button>
+    <div class="form-group">
+        <input type="submit" value="حفظ" class="btn btn-success" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function addRow() {
+            var table = document.getElementById("invoiceDetailsTable").getElementsByTagName("tbody")[0];
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = `<select name="PurchaseInvoiceDetails[${rowCount}].Product_ID" class="form-control">
+                        <option value="">أختر الصنف</option>
+        @foreach (var product in ViewBag.Products)
+        {
+                                <option value="@product.Value">@product.Text</option>
+        }
+                    </select>`;
+
+            var cell2 = row.insertCell(1);
+            cell2.innerHTML = `<input type="number" name="PurchaseInvoiceDetails[${rowCount}].ResivedQuantity" class="form-control"  placeholder="0"/>`;
+
+            var cell3 = row.insertCell(2);
+            cell3.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>';
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}
