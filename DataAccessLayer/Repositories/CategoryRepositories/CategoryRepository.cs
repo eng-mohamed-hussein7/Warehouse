@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories.CategoryService
 
         public async Task<Category> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.tblCategories.FindAsync(id);
         }
 
         public async Task UpdateAsync(Category category)

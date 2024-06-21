@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>إضافة اذن استلام</h1>
+<h1>اذن إضافة</h1>
 
 <form asp-action="CreateNewPurchaseInvoice" method="post">
     <div class="form-group">
@@ -22,9 +22,9 @@
     <table class="table" id="invoiceDetailsTable">
         <thead>
             <tr>
-                <th>أسم الصنف</th>
-                <th>الكمية</th>
-                <th>   </th>
+                <th> أسم الصنف </th>
+                <th>   الكمية  </th>
+                <th>   حذف     </th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +51,11 @@
         </tbody>
     </table>
     <button type="button" class="btn btn-primary" onclick="addRow()">إضافة صف جديد</button>
+    <div>
+        <p>
+
+        </p>
+    </div>
     <div class="form-group">
         <input type="submit" value="حفظ" class="btn btn-success" />
     </div>

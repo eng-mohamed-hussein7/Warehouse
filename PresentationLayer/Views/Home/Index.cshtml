@@ -1,16 +1,14 @@
-﻿@using DomainLayer.Models
-@model List<Product>
+﻿@using BusinessLogicLayer.DTO
+@model List<ProductDTOForViewInTable>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-
 <div class="container">
     <div class="row mt-3">
         <div class="col-8">
             <h2>مرحبًا بك، حسين</h2>
-            @* <h3>مدير حساب</h3> *@
         </div>
         <div class="col-4 text-end">
             <button class="btn btn-primary me-2">عرض الاصناف</button>
@@ -26,41 +24,109 @@
     </div>
     <div class="row">
         <div class="col">
-            @if (Model==null)
+            @if (Model == null)
             {
                 <h1>no data found</h1>
             }
-            else{
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>كود المنتج</th>
-                        <th>اسم المنتج</th>
-                        <th>الفئة</th>
-                        <th>الوحدة</th>
-                        <th>المخزون</th>
-                        <th>سعر الوحدة</th>
-                        <th>تعديل</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Product product in Model)
-                    {
+            else
+            {
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>@product.Code</td>
-                            <td>@product.Name</td>
-                            <td>@product.Category</td>
-                            <td>@product.UnitType</td>
-                            <td>@product.Quantity</td>
-                            <td>@product.Price</td>
-
-                            <td><button class="btn btn-primary">تعديل</button></td>
+                            <th>
+                                كود الصنف
+                                <br />
+                                <input type="text" id="codeFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>
+                                اسم الصنف
+                                <br />
+                                <input type="text" id="nameFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>
+                                الفئة
+                                <br />
+                                <input type="text" id="categoryFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>
+                                الوحدة
+                                <br />
+                                <input type="text" id="unitTypeFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>
+                                المخزون
+                                <br />
+                                <input type="text" id="quantityFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>
+                                سعر الوحدة
+                                <br />
+                                <input type="text" id="priceFilter" onkeyup="filterTable()" placeholder="بحث..." />
+                            </th>
+                            <th>تعديل</th>
                         </tr>
-                    }
-                    
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="productTable">
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>@product.Code</td>
+                                <td>@product.ProductName</td>
+                                <td>@product.CategoryName</td>
+                                <td>@product.UnitType</td>
+                                <td>@product.Quantity</td>
+                                <td>@product.Price</td>
+                                <td><button class="btn btn-primary">تعديل</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function filterTable() {
+            var codeFilter = document.getElementById('codeFilter').value.toUpperCase();
+            var nameFilter = document.getElementById('nameFilter').value.toUpperCase();
+            var categoryFilter = document.getElementById('categoryFilter').value.toUpperCase();
+            var unitTypeFilter = document.getElementById('unitTypeFilter').value.toUpperCase();
+            var quantityFilter = document.getElementById('quantityFilter').value.toUpperCase();
+            var priceFilter = document.getElementById('priceFilter').value.toUpperCase();
+
+            var table = document.getElementById('productTable');
+            var tr = table.getElementsByTagName('tr');
+
+            for (var i = 0; i < tr.length; i++) {
+                var tdCode = tr[i].getElementsByTagName('td')[0];
+                var tdName = tr[i].getElementsByTagName('td')[1];
+                var tdCategory = tr[i].getElementsByTagName('td')[2];
+                var tdUnitType = tr[i].getElementsByTagName('td')[3];
+                var tdQuantity = tr[i].getElementsByTagName('td')[4];
+                var tdPrice = tr[i].getElementsByTagName('td')[5];
+
+                if (tdCode && tdName && tdCategory && tdUnitType && tdQuantity && tdPrice) {
+                    var codeValue = tdCode.textContent || tdCode.innerText;
+                    var nameValue = tdName.textContent || tdName.innerText;
+                    var categoryValue = tdCategory.textContent || tdCategory.innerText;
+                    var unitTypeValue = tdUnitType.textContent || tdUnitType.innerText;
+                    var quantityValue = tdQuantity.textContent || tdQuantity.innerText;
+                    var priceValue = tdPrice.textContent || tdPrice.innerText;
+
+                    if (codeValue.toUpperCase().indexOf(codeFilter) > -1 &&
+                        nameValue.toUpperCase().indexOf(nameFilter) > -1 &&
+                        categoryValue.toUpperCase().indexOf(categoryFilter) > -1 &&
+                        unitTypeValue.toUpperCase().indexOf(unitTypeFilter) > -1 &&
+                        quantityValue.toUpperCase().indexOf(quantityFilter) > -1 &&
+                        priceValue.toUpperCase().indexOf(priceFilter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+}

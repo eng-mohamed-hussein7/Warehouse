@@ -27,5 +27,15 @@ namespace BusinessLogicLayer.DTO
 
         public List<CustomSelectListItem> UnitTypes { get; set; } = new List<CustomSelectListItem>();
     }
+    public class ProductDTOForViewInTable
+    {
+        public string Code { get; set; }
+        public string ProductName { get; set; }
+        public string CategoryName { get; set; }
+        public string UnitType { get; set; }
+        public int Quantity { get; set; }
+        public decimal? Price { get; set; }
 
+    }
+   
 }

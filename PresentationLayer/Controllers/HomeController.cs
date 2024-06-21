@@ -14,7 +14,7 @@ namespace Demo.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _productService.GetAllProductsAsync();
+            var products = await _productService.GetAllProductsForViewAsync();
             if (products == null)
             {
                 return NotFound();

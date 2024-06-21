@@ -7,6 +7,7 @@ namespace BusinessLogicLayer.Services.CategoryServices
     {
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<CategoryDTO> GetCategoryByIdAsync(int id);
+        Task<string> GetCategoryNameByIdAsync(int id);
         Task AddCategoryAsync(CategoryDTO category);
         Task UpdateCategoryAsync(CategoryDTO category);
         Task DeleteCategoryAsync(int id);

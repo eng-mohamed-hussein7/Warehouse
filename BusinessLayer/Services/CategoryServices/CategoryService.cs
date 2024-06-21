@@ -42,11 +42,16 @@ namespace BusinessLogicLayer.Services.CategoryServices
             
         }
 
+        public async Task<string> GetCategoryNameByIdAsync(int id)
+        {
+            Category cat = await _categoryRepository.GetByIdAsync(id);
+            return cat?.Name ?? "Unknown";
+        }
+
         public Task<CategoryDTO> GetCategoryByIdAsync(int id)
         {
             throw new NotImplementedException();
-        }
-
+        } 
         public Task UpdateCategoryAsync(CategoryDTO category)
         {
             throw new NotImplementedException();
