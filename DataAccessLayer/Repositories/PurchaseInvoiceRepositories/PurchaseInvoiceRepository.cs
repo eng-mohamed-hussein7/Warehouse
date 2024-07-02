@@ -1,8 +1,6 @@
 ﻿using DataAccessLayer.Data;
 using DomainLayer.Models.PurchaseInvoice;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.PurchaseInvoiceRepositories
 {

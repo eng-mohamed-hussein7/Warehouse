@@ -1,0 +1,96 @@
+﻿@model BusinessLogicLayer.DTO.DismissalNoticeDTO
+@{
+    ViewData["Title"] = "Create Dismissal Notice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>اذن صرف</h1>
+
+<form asp-action="CreateNewDismissalNotice" method="post">
+    <div class="form-group">
+        <label asp-for="Destination" class="control-label">اسم العملية</label>
+        <input asp-for="Destination" class="form-control" />
+        <span asp-validation-for="Destination" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Number" class="control-label">رقم العملية</label>
+        <input asp-for="Number" class="form-control" />
+        <span asp-validation-for="Number" class="text-danger"></span>
+    </div>
+
+    <h4>الاصناف</h4>
+    <table class="table" id="invoiceDetailsTable">
+        <thead>
+            <tr>
+                <th> أسم الصنف </th>
+                <th>   الكمية  </th>
+                <th>   حذف     </th>
+                <th>   ملاحظات  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.DismissalNoticeDetailDTOs.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="DismissalNoticeDetailDTOs[i].Product_ID" class="form-control">
+                            <option value="">أختر الصنف</option>
+                            @foreach (var product in ViewBag.Products)
+                            {
+                                <option value="@product.Value">@product.Text</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input asp-for="DismissalNoticeDetailDTOs[i].Quantity" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="DismissalNoticeDetailDTOs[i].Notes" class="form-control" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="addRow()">إضافة صف جديد</button>
+    <div>
+        <p>
+
+        </p>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="حفظ" class="btn btn-success" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function addRow() {
+            var table = document.getElementById("invoiceDetailsTable").getElementsByTagName("tbody")[0];
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = `<select name="DismissalNoticeDetails[${rowCount}].Product_ID" class="form-control">
+                                <option value="">أختر الصنف</option>
+        @foreach (var product in ViewBag.Products)
+        {
+                                            <option value="@product.Value">@product.Text</option>
+        }
+                            </select>`;
+
+            var cell2 = row.insertCell(1);
+            cell2.innerHTML = `<input type="number" name="DismissalNoticeDetails[${rowCount}].Quantity" class="form-control"  placeholder="0"/>`;
+
+            var cell3 = row.insertCell(2);
+            cell3.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeRow(this)">حذف</button>';
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}

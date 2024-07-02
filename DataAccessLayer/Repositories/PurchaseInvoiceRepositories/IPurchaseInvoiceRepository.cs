@@ -1,6 +1,4 @@
 ﻿using DomainLayer.Models.PurchaseInvoice;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.PurchaseInvoiceRepositories
 {

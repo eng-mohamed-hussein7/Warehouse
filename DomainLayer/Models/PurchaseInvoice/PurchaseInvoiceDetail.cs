@@ -5,6 +5,7 @@ namespace DomainLayer.Models.PurchaseInvoice
     public class PurchaseInvoiceDetail:GeneralEntity
     {
         public int ResivedQuantity { get; set; }
+        public string Notes { get; set; }
         [ForeignKey("Product")]
         public int Product_ID { get; set; }
         public virtual Product Product { get; set; }

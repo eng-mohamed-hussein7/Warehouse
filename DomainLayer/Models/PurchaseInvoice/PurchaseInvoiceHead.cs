@@ -4,6 +4,7 @@
     {
         public string SupplierName { get; set; }
         public string InvoiceNumber { get; set; }
+        public string Notes { get; set; }
         public virtual List<PurchaseInvoiceDetail> PurchaseInvoiceDetails { get; set; }
 
     }

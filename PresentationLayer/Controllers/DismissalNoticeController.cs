@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLogicLayer.DTO;
+using BusinessLogicLayer.Services.DismissalNoticeServices;
 using BusinessLogicLayer.Services.ProductServices;
-using BusinessLogicLayer.DTO;
-using BusinessLogicLayer.Services.PurchaseInvoiceServices;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PresentationLayer.Controllers
 {
-    public class PurchaseInvoiceController : Controller
+    public class DismissalNoticeController : Controller
     {
-        private readonly IPurchaseInvoiceService _purchaseInvoiceService;
+      
+        private readonly IDismissalNoticeService _dismissalNoticeService;
         private readonly IProductService _productService;
 
-        public PurchaseInvoiceController(IPurchaseInvoiceService purchaseInvoiceService, IProductService productService)
+        public DismissalNoticeController(IDismissalNoticeService dismissalNoticeService, IProductService productService)
         {
-            _purchaseInvoiceService = purchaseInvoiceService;
+            _dismissalNoticeService = dismissalNoticeService;
             _productService = productService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateNewPurchaseInvoice()
+        public async Task<IActionResult> CreateNewDismissalNotice()
         {
             var products = await _productService.GetAllProductsAsync();
             ViewBag.Products = products.Select(p => new SelectListItem
@@ -27,11 +28,11 @@ namespace PresentationLayer.Controllers
                 Text = $"{p.Name} ({p.Code})"
             }).ToList();
 
-            var model = new PurchaseInvoiceDTO
+            var model = new DismissalNoticeDTO
             {
-                PurchaseInvoiceDetails = new List<PurchaseInvoiceDetailDTO>
+                DismissalNoticeDetailDTOs = new List<DismissalNoticeDetailDTO>
                 {
-                    new PurchaseInvoiceDetailDTO()
+                    new DismissalNoticeDetailDTO()
                 }
             };
 
@@ -39,11 +40,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewPurchaseInvoice(PurchaseInvoiceDTO model)
+        public async Task<IActionResult> CreateNewDismissalNotice(DismissalNoticeDTO model)
         {
-            if (model==null|| !ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
             {
-                await _purchaseInvoiceService.AddAsync(model);
+                await _dismissalNoticeService.AddAsync(model);
                 return RedirectToAction("Index", "Home");
             }
 
